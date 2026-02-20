@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Grageas Orion - Oficial</title>
+    <title>Grageas Orion - Sistema de Apertura</title>
     <style>
         body { 
             margin: 0; background: #0d1117 url('https://i.ibb.co/bMh1c0Tx/1771555355884.png') no-repeat center fixed;
@@ -10,57 +10,56 @@
             display: flex; flex-direction: column; align-items: center; padding: 20px;
         }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: -1; }
-        h1 { color: #f9e29c; font-size: 22px; margin-bottom: 10px; text-shadow: 0 0 8px rgba(249,226,156,0.4); }
         
-        /* Selector principal estilo imagen */
-        .main-sel-container {
+        h1 { color: #f9e29c; font-size: 20px; margin-bottom: 10px; text-align: center; }
+
+        /* Selector de cantidad */
+        .selector-principal {
             width: 95%; max-width: 800px; background: #161b22; border: 1px solid #d4af37;
-            border-radius: 4px; padding: 5px; margin-bottom: 25px;
+            border-radius: 4px; padding: 8px; margin-bottom: 20px;
         }
-        #cant-grageas {
+        #cantidad {
             width: 100%; background: transparent; border: none; color: #f9e29c; 
-            font-size: 18px; outline: none; cursor: pointer; padding: 5px;
+            font-size: 16px; outline: none; cursor: pointer;
         }
 
-        /* Contenedor de la Gragea (Borde Dorado) */
-        .gragea-card {
-            width: 90%; max-width: 450px; background: rgba(10, 14, 20, 0.95);
-            border: 2px solid #d4af37; border-radius: 12px; padding: 20px;
-            margin-bottom: 20px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        /* Caja de Gragea */
+        .caja-gragea {
+            width: 90%; max-width: 420px; background: rgba(10, 10, 10, 0.95);
+            border: 2px solid #d4af37; border-radius: 12px; padding: 15px;
+            margin-bottom: 15px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
-        .gragea-label { color: #f9e29c; font-weight: bold; margin-bottom: 15px; font-size: 18px; display: block; }
+        .titulo-gragea { color: #f9e29c; font-weight: bold; display: block; margin-bottom: 10px; }
 
-        /* Selectores de sabores internos */
-        .sabor-input {
-            width: 100%; padding: 10px; background: #0d1117; border: 1px solid #d4af37;
-            border-radius: 6px; color: #fff; margin-bottom: 10px; font-size: 15px; outline: none;
+        /* Selectores de sabor */
+        .sel-sabor {
+            width: 100%; padding: 8px; background: #000; border: 1px solid #444;
+            border-radius: 5px; color: #fff; margin-bottom: 8px; font-size: 14px;
         }
 
-        /* Botón Abrir */
+        /* BOTÓN ABRIR - Ahora más visible */
         .btn-abrir {
-            background: #f9e29c; color: #000; border: none; padding: 15px 45px;
+            background: #f9e29c; color: #000; border: none; padding: 15px 50px;
             border-radius: 8px; font-weight: bold; font-size: 18px; cursor: pointer;
-            margin: 10px 0 30px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            margin: 10px 0 30px; display: none; /* Se activa con JS */
         }
-        .btn-abrir:hover { background: #d4af37; transform: translateY(-2px); }
+        .btn-abrir:hover { background: #d4af37; transform: scale(1.02); }
 
         /* Resultados */
-        .res-container {
-            width: 90%; max-width: 450px; background: rgba(0,0,0,0.8);
-            border: 1px dashed #f9e29c; border-radius: 10px; padding: 20px;
-            display: none; margin-bottom: 50px;
+        .res-final {
+            width: 90%; max-width: 420px; background: #000; border: 1px dashed #f9e29c;
+            border-radius: 10px; padding: 15px; display: none; margin-bottom: 40px;
         }
-        .res-item { padding: 10px; border-bottom: 1px solid #333; font-size: 17px; }
-        .res-item:last-child { border-bottom: none; }
-        .footer-brand { color: #d4af37; font-size: 26px; font-weight: bold; margin-bottom: 40px; }
+        .linea-premio { padding: 8px 0; border-bottom: 1px solid #222; font-size: 16px; }
+        .footer { color: #d4af37; font-size: 22px; font-weight: bold; margin-bottom: 30px; }
     </style>
 </head>
 <body>
     <div class="overlay"></div>
     <h1>¿Cuántas grageas quieres abrir?</h1>
     
-    <div class="main-sel-container">
-        <select id="cant-grageas" onchange="mostrarCajas()">
+    <div class="selector-principal">
+        <select id="cantidad" onchange="crearGrageas()">
             <option value="0">Selecciona una --</option>
             <option value="1">1 gragea</option>
             <option value="2">2 grageas</option>
@@ -68,65 +67,59 @@
         </select>
     </div>
 
-    <div id="zona-grageas"></div>
+    <div id="contenedor-magico"></div>
 
-    <button id="btn-magico" class="btn-abrir" style="display:none;" onclick="abrirTodo()">Abrir Grageas</button>
+    <button id="boton-accion" class="btn-abrir" onclick="abrirGrageas()">Abrir Grageas</button>
 
-    <div id="panel-resultados" class="res-container"></div>
+    <div id="resultado-lista" class="res-final"></div>
 
-    <div class="footer-brand">Hogwarts Orión</div>
+    <div class="footer">Hogwarts Orión</div>
 
     <script>
-        const SABORES = [
-            "1. Aceitunas 🫒", "2. Ajo crudo 🧄", "3. Alga marina 🪸", "4. Aliento de dragón 🐉🌬️", "5. Aliento de ogro 🧌", "6. Algodón de azúcar 🍭", "7. Arándanos 🫐", "8. Baba de caracol 🐌", "9. Bellini 🥂", "10. Beso no correspondido 💋💔", "11. Biberón 🍼", "12. Blody Mary 🫗🩸", "13. Brillo labial 💋💄", "14. Burrito 🌯", "15. Cacahuate 🥜", "16. Caña de azúcar 🎋", "17. Canela en polvo 🍂", "18. Cáscara de plátano 🍌", "19. Café frío ☕", "20. Café quemado ☕🔥", "21. Caldo de murciélago 🦇🍲", "22. Cebolla caramelizada 🧅", "23. Cereza 🍒", "24. Cerveza 🍺", "25. Chicle de menta 🍬", "26. Chisme express 🫦☕️", "27. Chorizo 🥩", "28. Cítricos 🍋", "29. Coco 🥥", "30. Cóctel 🍸", "31. Coliflor cruda 🥦", "32. Cera de oído 👂", "33. Champaña 🥂", "34. Chocolate 🍫", "35. Cupcake 🧁", "36. Donas 🍩", "37. Drama queen 👑💅🏼", "38. Dulce de leche 🥮", "39. Dumpling 🥟", "40. Durazno 🍑", "41. Ensalada 🥗", "42. Esencia de mandrágora 🌱", "43. Espinaca cocida 🍲", "44. Espuma de mar 🌊", "45. Estiércol de dragón 🐉💩", "46. Ex 👅", "47. Exponme 👀🔮", "48. Flor de cactus 🌵", "49. Frutilla 🍓", "50. Galleta de avena 🍪", "51. Gelatina de sapo 🐸", "52. Guisado 🍛", "53. Guisantes triturados 🫛", "54. Helado de calabaza 🎃", "55. Helado de vainilla 🍨", "56. Hielo 🧊", "57. Hojas secas 🍁", "58. Hueso dragón tostado 🦴", "59. Huevo frito 🍳", "60. Huevo podrido 🥚", "61. Jarabe de arce 🍯", "62. Jugo de pepino 🥒", "63. Kiwi 🥝", "64. Leche 🐮", "65. Leche caducada 🥛", "66. Leche podrida 🧋", "67. Lo juro ✋🏻", "68. Manteca de maní 🥜", "69. Manteca rancia 🧈", "70. Margarita 🍸", "71. Martini 🍸", "72. Mate 🧉", "73. Menta 🌿", "74. Mezcla de hongos 🍄", "75. Mermelada de escarabajo 🪲", "76. Moco 🦠", "77. Naruto 🍥", "78. Negroni 🥃", "79. Onigiri 🍙", "80. Ostras vivas 🦪", "81. Pan con hongos 🫓", "82. Papas fritas 🍟", "83. Pasta de dientes 🪥", "84. Pasta pegajosa 🍝", "85. Pastel 🍰", "86. Pepino 🥒", "87. Picante 🌶️", "88. Pie de manzana 🥧", "89. Pimiento asado 🫑", "90. Piña colada 🍹", "91. Pizza 🍕", "92. Pollo asado 🍗", "93. Polvos mágicos ✨", "94. Pudín 🍮", "95. Queso mohoso 🧀", "96. Redflag 🚩", "97. Raíz de mandrágora 🌱", "98. Ron añejo 🍾", "99. Sal marina 🧂", "100. Sandía 🍉", "101. Sangre 🩸", "102. Sangre de unicornio 🦄", "103. Sangre de unicornio oxidada 🦄", "104. Sardinas enlatadas 🐟", "105. Sexo en la playa 🥃🏖️", "106. Soju 🍶", "107. Sopa de pescado 🍵", "108. Sopa de pescado en mal estado 🍵", "109. Spaguetti 🍝", "110. Sudor 💦", "111. Sudor de troll 🧟‍♂️💦", "112. Sushi 🍣", "113. Tacos 🌮", "114. Tamal 🫔", "115. Te negro 🫖🖤", "116. Tinta de pulpo 🐙", "117. Trigo seco 🌾", "118. Tronco podrido 🪵", "119. Tocino 🥓", "120. Vino 🍷", "121. Vómito 🤮", "122. Waffles 🧇", "123. Whisky 🥃"
-        ];
+        const listaSabores = ["1. Aceitunas 🫒", "2. Ajo crudo 🧄", "3. Alga marina 🪸", "4. Aliento de dragón 🐉🌬️", "5. Aliento de ogro 🧌", "6. Algodón de azúcar 🍭", "7. Arándanos 🫐", "8. Baba de caracol 🐌", "9. Bellini 🥂", "10. Beso no correspondido 💋💔", "11. Biberón 🍼", "12. Blody Mary 🫗🩸", "13. Brillo labial 💋💄", "14. Burrito 🌯", "15. Cacahuate 🥜", "16. Caña de azúcar 🎋", "17. Canela en polvo 🍂", "18. Cáscara de plátano 🍌", "19. Café frío ☕", "20. Café quemado ☕🔥", "21. Caldo de murciélago 🦇🍲", "22. Cebolla caramelizada 🧅", "23. Cereza 🍒", "24. Cerveza 🍺", "25. Chicle de menta 🍬", "26. Chisme express 🫦☕️", "27. Chorizo 🥩", "28. Cítricos 🍋", "29. Coco 🥥", "30. Cóctel 🍸", "31. Coliflor cruda 🥦", "32. Cera de oído 👂", "33. Champaña 🥂", "34. Chocolate 🍫", "35. Cupcake 🧁", "36. Donas 🍩", "37. Drama queen 👑💅🏼", "38. Dulce de leche 🥮", "39. Dumpling 🥟", "40. Durazno 🍑", "41. Ensalada 🥗", "42. Esencia de mandrágora 🌱", "43. Espinaca cocida 🍲", "44. Espuma de mar 🌊", "45. Estiércol de dragón 🐉💩", "46. Ex 👅", "47. Exponme 👀🔮", "48. Flor de cactus 🌵", "49. Frutilla 🍓", "50. Galleta de avena 🍪", "51. Gelatina de sapo 🐸", "52. Guisado 🍛", "53. Guisantes triturados 🫛", "54. Helado de calabaza 🎃", "55. Helado de vainilla 🍨", "56. Hielo 🧊", "57. Hojas secas 🍁", "58. Hueso dragón tostado 🦴", "59. Huevo frito 🍳", "60. Huevo podrido 🥚", "61. Jarabe de arce 🍯", "62. Jugo de pepino 🥒", "63. Kiwi 🥝", "64. Leche 🐮", "65. Leche caducada 🥛", "66. Leche podrida 🧋", "67. Lo juro ✋🏻", "68. Manteca de maní 🥜", "69. Manteca rancia 🧈", "70. Margarita 🍸", "71. Martini 🍸", "72. Mate 🧉", "73. Menta 🌿", "74. Mezcla de hongos 🍄", "75. Mermelada de escarabajo 🪲", "76. Moco 🦠", "77. Naruto 🍥", "78. Negroni 🥃", "79. Onigiri 🍙", "80. Ostras vivas 🦪", "81. Pan con hongos 🫓", "82. Papas fritas 🍟", "83. Pasta de dientes 🪥", "84. Pasta pegajosa 🍝", "85. Pastel 🍰", "86. Pepino 🥒", "87. Picante 🌶️", "88. Pie de manzana 🥧", "89. Pimiento asado 🫑", "90. Piña colada 🍹", "91. Pizza 🍕", "92. Pollo asado 🍗", "93. Polvos mágicos ✨", "94. Pudín 🍮", "95. Queso mohoso 🧀", "96. Redflag 🚩", "97. Raíz de mandrágora 🌱", "98. Ron añejo 🍾", "99. Sal marina 🧂", "100. Sandía 🍉", "101. Sangre 🩸", "102. Sangre de unicornio 🦄", "103. Sangre de unicornio oxidada 🦄", "104. Sardinas enlatadas 🐟", "105. Sexo en la playa 🥃🏖️", "106. Soju 🍶", "107. Sopa de pescado 🍵", "108. Sopa de pescado en mal estado 🍵", "109. Spaguetti 🍝", "110. Sudor 💦", "111. Sudor de troll 🧟‍♂️💦", "112. Sushi 🍣", "113. Tacos 🌮", "114. Tamal 🫔", "115. Te negro 🫖🖤", "116. Tinta de pulpo 🐙", "117. Trigo seco 🌾", "118. Tronco podrido 🪵", "119. Tocino 🥓", "120. Vino 🍷", "121. Vómito 🤮", "122. Waffles 🧇", "123. Whisky 🥃"];
+        const listaPremios = ["Saeta de fuego 🔥🧹", "Nimbus 2000 🪽🧹", "Anillo de Morfín Gaunt 💍", "Varita de saúco 🪄💀", "El desiluminador 💡", "Pergamino mágico 📜", "El traslador 🔮", "Carta vociferadora 💌", "Giratiempo ⏱", "Félix felicis 🍀🧪", "Pluma de Hermione 🪶", "Amortentia 💘🧪", "Pastillas vomitivas 💊", "Ranita Amarilla 💛🍫", "Ranita verde 💚🍫", "Ranita roja ❤🍫", "Ranita negra 🖤🍫", "Ranita rosa 🩷🍫", "Ranita lila 💜🍫", "Ranita naranja 🧡🍫", "Ranita celeste 🩵🍫", "Espejo de Oesed 🪞", "La recordadora de Neville 🎱", "Gragea de todos los sabores 🫘", "Robas 10.000G a alguien 🪙", "-10.000G 🪙", "-5.000G 🪙", "-2.000G 🪙", "-500G 🪙", "-1.500G 🪙", "-8.000p", "-7.000p", "+8.000G 🪙", "+5.000G 🪙", "+3.000G 🪙", "+1.500G 🪙", "-10.000p", "+2 ranitas a elección", "+3 ranitas a elección", "Pierdes 2 productos (azar)", "+10.000p", "+8.000p", "+5.000p", "Robas 10.000p a alguien", "Robas 8.000p a alguien", "Robas 5.000p a alguien", "Pierdes 3 objetos (azar)", "Eliges entre 2 cosas ocultas", "Donar 5.000G a alguien 🪙", "Restas 5.000p a compañero", "Sumas 5.000p a compañero", "Pierdes 3 productos (elección)", "Pierdes 2 productos (elección)"];
 
-        const PREMIOS = [
-            "Saeta de fuego 🔥🧹", "Nimbus 2000 🪽🧹", "Anillo de Morfín Gaunt 💍", "Varita de saúco 🪄💀", "El desiluminador 💡", "Pergamino mágico 📜", "El traslador 🔮", "Carta vociferadora 💌", "Giratiempo ⏱", "Félix felicis 🍀🧪", "Pluma de Hermione 🶶", "Amortentia 💘🧪", "Pastillas vomitivas 💊", "Ranita Amarilla 💛🍫", "Ranita verde 💚🍫", "Ranita roja ❤🍫", "Ranita negra 🖤🍫", "Ranita rosa 🩷🍫", "Ranita lila 💜🍫", "Ranita naranja 🧡🍫", "Ranita celeste 🩵🍫", "Espejo de Oesed 🪞", "La recordadora de Neville 🎱", "Gragea de todos los sabores 🫘", "Robas 10.000G a alguien 🪙", "-10.000G 🪙", "-5.000G 🪙", "-2.000G 🪙", "-500G 🪙", "-1.500G 🪙", "-8.000p", "-7.000p", "+8.000G 🪙", "+5.000G 🪙", "+3.000G 🪙", "+1.500G 🪙", "-10.000p", "+2 ranitas a elección", "+3 ranitas a elección", "Pierdes 2 productos (azar)", "+10.000p", "+8.000p", "+5.000p", "Robas 10.000p a alguien", "Robas 8.000p a alguien", "Robas 5.000p a alguien", "Pierdes 3 objetos (azar)", "Elegir entre 2 cosas ocultas", "Donar 5.000G a alguien 🪙", "Restas 5.000p a compañero", "Sumas 5.000p a compañero", "Pierdes 3 productos (elección)", "Pierdes 2 productos (elección)"
-        ];
-
-        function mostrarCajas() {
-            const num = document.getElementById('cant-grageas').value;
-            const zona = document.getElementById('zona-grageas');
-            const btn = document.getElementById('btn-magico');
-            const res = document.getElementById('panel-resultados');
+        function crearGrageas() {
+            const num = document.getElementById('cantidad').value;
+            const contenedor = document.getElementById('contenedor-magico');
+            const btn = document.getElementById('boton-accion');
+            const res = document.getElementById('resultado-lista');
             
-            zona.innerHTML = "";
+            contenedor.innerHTML = "";
             res.style.display = "none";
 
             if (num > 0) {
-                btn.style.display = "block";
-                // Generamos el HTML una sola vez para velocidad
-                let htmlSabores = `<option>-- Seleccionar sabor --</option>`;
-                SABORES.forEach(s => htmlSabores += `<option>${s}</option>`);
+                btn.style.display = "inline-block";
+                let opciones = `<option>-- Seleccionar sabor --</option>`;
+                listaSabores.forEach(s => opciones += `<option>${s}</option>`);
 
                 for (let i = 1; i <= num; i++) {
-                    const card = document.createElement('div');
-                    card.className = 'gragea-card';
-                    card.innerHTML = `
-                        <span class="gragea-label">Gragea ${i}:</span>
-                        <select class="sabor-input">${htmlSabores}</select>
-                        <select class="sabor-input">${htmlSabores}</select>
-                        <select class="sabor-input">${htmlSabores}</select>
+                    const caja = document.createElement('div');
+                    caja.className = 'caja-gragea';
+                    caja.innerHTML = `
+                        <span class="titulo-gragea">Gragea ${i}:</span>
+                        <select class="sel-sabor">${opciones}</select>
+                        <select class="sel-sabor">${opciones}</select>
+                        <select class="sel-sabor">${opciones}</select>
                     `;
-                    zona.appendChild(card);
+                    contenedor.appendChild(caja);
                 }
             } else {
                 btn.style.display = "none";
             }
         }
 
-        function abrirTodo() {
-            const panel = document.getElementById('panel-resultados');
-            const num = document.getElementById('cant-grageas').value;
-            panel.innerHTML = "<h2 style='color:#f9e29c; margin-top:0;'>✨ Resultados:</h2>";
+        function abrirGrageas() {
+            const res = document.getElementById('resultado-lista');
+            const num = document.getElementById('cantidad').value;
+            res.innerHTML = "<h3 style='color:#f9e29c'>✨ Has ganado:</h3>";
             
             for (let i = 1; i <= num; i++) {
-                const premioAzar = PREMIOS[Math.floor(Math.random() * PREMIOS.length)];
-                panel.innerHTML += `<div class="res-item"><strong>Gragea ${i}:</strong> ${premioAzar}</div>`;
+                const azar = listaPremios[Math.floor(Math.random() * listaPremios.length)];
+                res.innerHTML += `<div class="linea-premio"><strong>Gragea ${i}:</strong> ${azar}</div>`;
             }
-            panel.style.display = "block";
-            panel.scrollIntoView({ behavior: 'smooth' });
+            res.style.display = "block";
+            res.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
