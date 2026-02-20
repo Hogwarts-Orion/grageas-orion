@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grageas de Todos los Sabores - Hogwarts Orion</title>
+    <title>Grageas Orion - Oficial</title>
     <style>
         body { 
             margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;
             background-color: #000;
-            /* Usamos el fondo del Gran Comedor que ya tienes */
             background-image: url('https://i.ibb.co/bMh1c0Tx/1771555355884.png');
             background-size: cover; background-position: center;
             font-family: 'Georgia', serif;
@@ -25,77 +24,22 @@
         }
 
         .logo-circle {
-            width: 120px; height: 120px; margin: 0 auto 20px;
+            width: 140px; height: 140px; margin: 0 auto 20px;
             border-radius: 50%; border: 3px solid #d4af37;
-            /* Usamos el logo oficial que ya tienes */
             background-image: url('https://i.ibb.co/DDq32t55/1771555069500.png');
             background-size: 80%; background-repeat: no-repeat; background-position: center;
             background-color: #000;
             box-shadow: 0 0 15px #d4af37;
         }
 
-        h2 { color: #d4af37; letter-spacing: 2px; font-size: 20px; margin-bottom: 25px; text-transform: uppercase; }
+        h2 { color: #d4af37; letter-spacing: 2px; font-size: 20px; margin-bottom: 20px; text-transform: uppercase; }
 
         .display-gragea {
             background: #111; border: 1px solid #333; border-radius: 20px;
-            padding: 20px; min-height: 100px; display: flex; flex-direction: column;
+            padding: 25px; min-height: 120px; display: flex; flex-direction: column;
             align-items: center; justify-content: center; margin-bottom: 25px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
         }
 
-        #sabor-texto { font-size: 24px; font-weight: bold; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-        #descripcion { color: #aaa; font-size: 14px; margin-top: 10px; font-style: italic; }
-
-        .btn-magico {
-            background: transparent; border: 2px solid #d4af37; color: #d4af37;
-            padding: 12px 25px; border-radius: 50px; font-weight: bold;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
-            transition: all 0.3s ease; width: 100%;
-        }
-
-        .btn-magico:hover { background: #d4af37; color: #000; box-shadow: 0 0 20px #d4af37; }
-
-        .footer { margin-top: 25px; font-size: 18px; font-weight: bold; color: #d4af37; text-shadow: 0 0 10px #d4af37; }
-    </style>
-</head>
-<body>
-    <div class="overlay"></div>
-    <div class="card">
-        <div class="logo-circle"></div>
-        <h2>Grageas Mágicas</h2>
-        
-        <div class="display-gragea">
-            <div id="sabor-texto">¿Te atreves?</div>
-            <div id="descripcion">Haz clic abajo para comer una</div>
-        </div>
-
-        <button class="btn-magico" onclick="lanzarGragea()">Comer Gragea</button>
-        
-        <div class="footer">Hogwarts Orión</div>
-    </div>
-
-    <script>
-        function lanzarGragea() {
-            const grageas = [
-                { s: "Vómito", c: "#8b4513", d: "¡Qué mala suerte! Sabe horrible." },
-                { s: "Césped", c: "#7cfc00", d: "Fresco, como un campo de Quidditch." },
-                { s: "Moco", c: "#32cd32", d: "Pegajoso y algo salado..." },
-                { s: "Malvavisco", c: "#ffb6c1", d: "¡Dulce y suave! Qué delicia." },
-                { s: "Cera de Oído", c: "#ffd700", d: "Albus Dumbledore no tuvo suerte con esta." },
-                { s: "Tutti-Frutti", c: "#ff00ff", d: "Una explosión de frutas en tu boca." },
-                { s: "Jabón", c: "#87ceeb", d: "Limpio, pero no muy sabroso." },
-                { s: "Huevo Podrido", c: "#fafad2", d: "El olor es peor que el sabor..." }
-            ];
-
-            const azar = grageas[Math.floor(Math.random() * grageas.length)];
-            const elSabor = document.getElementById('sabor-texto');
-            const elDesc = document.getElementById('descripcion');
-
-            // Cambiamos el texto y el color
-            elSabor.innerText = azar.s;
-            elSabor.style.color = azar.c;
-            elSabor.style.textShadow = `0 0 15px ${azar.c}`;
-            elDesc.innerText = azar.d;
-        }
-    </script>
-</body>
-</html>
+        #sabor-texto { 
+            font-size: 26px; font-weight: bold; color: #fff;
