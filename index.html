@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grageas Orion - Oficial</title>
+    <title>Grageas Orion</title>
     <style>
         body, html { 
             margin: 0; padding: 0; height: 100vh; width: 100vw;
@@ -13,43 +13,40 @@
             background-size: cover; background-position: center;
             font-family: 'Georgia', serif; overflow: hidden;
         }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 1; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1; }
         .card {
             position: relative; z-index: 10;
             background: #0a0a0a; border: 2px solid #d4af37; border-radius: 40px;
             padding: 30px; width: 85%; max-width: 380px; text-align: center;
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
         }
-        .logo-circle {
-            width: 120px; height: 120px; margin: 0 auto 20px;
+        .logo {
+            width: 110px; height: 110px; margin: 0 auto 20px;
             border-radius: 50%; border: 3px solid #d4af37;
-            background-image: url('https://i.ibb.co/DDq32t55/1771555069500.png');
-            background-size: 80%; background-repeat: no-repeat; background-position: center;
-            background-color: #000; box-shadow: 0 0 15px #d4af37;
+            background: #000 url('https://i.ibb.co/DDq32t55/1771555069500.png') no-repeat center;
+            background-size: 80%;
         }
-        h2 { color: #d4af37; font-size: 18px; margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
+        h2 { color: #d4af37; font-size: 18px; text-transform: uppercase; margin-bottom: 20px; }
         select {
-            width: 100%; padding: 15px; background: #111; border: 1px solid #d4af37;
-            border-radius: 20px; color: #fff; font-size: 16px; outline: none;
-            cursor: pointer; font-family: 'Georgia', serif;
+            width: 100%; padding: 12px; background: #111; border: 1px solid #d4af37;
+            border-radius: 15px; color: #fff; font-size: 16px; outline: none;
         }
-        .display-resultado {
-            margin-top: 25px; padding: 20px; border: 1px dashed #333; border-radius: 20px;
-            background: rgba(255,255,255,0.02); min-height: 80px;
+        .res {
+            margin-top: 20px; padding: 15px; border-radius: 15px;
+            background: rgba(255,255,255,0.05); min-height: 70px;
             display: flex; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: bold; color: #fff; border: 1px dashed #333;
         }
-        #texto-elegido { font-size: 22px; font-weight: bold; color: #fff; text-shadow: 0 0 10px #d4af37; }
-        .footer { margin-top: 25px; font-size: 24px; font-weight: bold; color: #d4af37; text-shadow: 0 0 10px #d4af37; }
+        .footer { margin-top: 20px; font-size: 24px; font-weight: bold; color: #d4af37; }
     </style>
 </head>
 <body>
     <div class="overlay"></div>
     <div class="card">
-        <div class="logo-circle"></div>
+        <div class="logo"></div>
         <h2>Grageas de Sabores</h2>
-        
-        <select id="selector" onchange="actualizar()">
-            <option value="">-- Elige una gragea --</option>
+        <select id="sel" onchange="ver()">
+            <option value="">-- Selecciona --</option>
             <option>1. Aceitunas 🫒</option><option>2. Ajo crudo 🧄</option><option>3. Alga marina 🪸</option><option>4. Aliento de dragón 🐉🌬️</option>
             <option>5. Aliento de ogro 🧌</option><option>6. Algodón de azúcar 🍭</option><option>7. Arándanos 🫐</option><option>8. Baba de caracol 🐌</option>
             <option>9. Bellini 🥂</option><option>10. Beso no correspondido 💋💔</option><option>11. Biberón 🍼</option><option>12. Blody Mary 🫗🩸</option>
@@ -62,7 +59,7 @@
             <option>37. Drama queen 👑💅🏼</option><option>38. Dulce de leche 🥮</option><option>39. Dumpling 🥟</option><option>40. Durazno 🍑</option>
             <option>41. Ensalada 🥗</option><option>42. Esencia de mandrágora 🌱</option><option>43. Espinaca cocida 🍲</option><option>44. Espuma de mar 🌊</option>
             <option>45. Estiércol de dragón 🐉💩</option><option>46. Ex 👅</option><option>47. Exponme 👀🔮</option><option>48. Flor de cactus 🌵</option>
-            <option>49. Frutilla  strawberry 🍓</option><option>50. Galleta de avena 🍪</option><option>51. Gelatina de sapo 🐸</option><option>52. Guisado 🍛</option>
+            <option>49. Frutilla 🍓</option><option>50. Galleta de avena 🍪</option><option>51. Gelatina de sapo 🐸</option><option>52. Guisado 🍛</option>
             <option>53. Guisantes triturados 🫛</option><option>54. Helado de calabaza 🎃</option><option>55. Helado de vainilla 🍨</option><option>56. Hielo 🧊</option>
             <option>57. Hojas secas 🍁</option><option>58. Hueso dragón tostado 🦴</option><option>59. Huevo frito 🍳</option><option>60. Huevo podrido 🥚</option>
             <option>61. Jarabe de arce 🍯</option><option>62. Jugo de pepino 🥒</option><option>63. Kiwi 🥝</option><option>64. Leche 🐮</option>
@@ -80,21 +77,15 @@
             <option>109. Spaguetti 🍝</option><option>110. Sudor 💦</option><option>111. Sudor de troll 🧟‍♂️💦</option><option>112. Sushi 🍣</option>
             <option>113. Tacos 🌮</option><option>114. Tamal 🫔</option><option>115. Te negro 🫖🖤</option><option>116. Tinta de pulpo 🐙</option>
             <option>117. Trigo seco 🌾</option><option>118. Tronco podrido 🪵</option><option>119. Tocino 🥓</option><option>120. Vino 🍷</option>
-            <option>121. Vómito 🤮</option><option>122. Waffles 🧇</option><option>123. Whisky 🥃</option><option>124. Se acabó el festín 🪄</option>
+            <option>121. Vómito 🤮</option><option>122. Waffles 🧇</option><option>123. Whisky 🥃</option>
         </select>
-
-        <div class="display-resultado">
-            <div id="texto-elegido">¿Qué número te tocó?</div>
-        </div>
-
+        <div class="res" id="r">¿Cuál te tocó?</div>
         <div class="footer">Hogwarts Orión</div>
     </div>
-
     <script>
-        function actualizar() {
-            const s = document.getElementById('selector').value;
-            const t = document.getElementById('texto-elegido');
-            t.innerText = s ? s : "¿Qué número te tocó?";
+        function ver() {
+            var s = document.getElementById('sel').value;
+            document.getElementById('r').innerText = s ? s : "¿Cuál te tocó?";
         }
     </script>
 </body>
