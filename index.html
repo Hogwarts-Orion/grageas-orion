@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grageas Orion</title>
+    <title>Grageas Orion - Oficial</title>
     <style>
-        /* Fondo y estructura base */
         body, html { 
             margin: 0; padding: 0; height: 100vh; width: 100vw;
             display: flex; align-items: center; justify-content: center;
@@ -15,74 +14,18 @@
             font-family: 'Georgia', serif; overflow: hidden;
         }
 
-        /* Capa oscura para que se lea bien */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 1; }
 
-        /* La Tarjeta de Hogwarts Orion */
         .card {
             position: relative; z-index: 10;
             background: #0a0a0a; border: 2px solid #d4af37; border-radius: 40px;
-            padding: 25px; width: 90%; max-width: 380px; text-align: center;
+            padding: 30px; width: 85%; max-width: 380px; text-align: center;
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
         }
 
-        .logo {
-            width: 110px; height: 110px; margin: 0 auto 15px;
+        .logo-circle {
+            width: 130px; height: 130px; margin: 0 auto 20px;
             border-radius: 50%; border: 3px solid #d4af37;
             background-image: url('https://i.ibb.co/DDq32t55/1771555069500.png');
             background-size: 80%; background-repeat: no-repeat; background-position: center;
-            background-color: #000;
-        }
-
-        h2 { color: #d4af37; font-size: 18px; text-transform: uppercase; margin-bottom: 15px; }
-
-        /* Selector de Grageas */
-        select {
-            width: 100%; padding: 12px; background: #111; border: 1px solid #d4af37;
-            border-radius: 15px; color: #fff; font-size: 16px; outline: none;
-        }
-
-        .resultado {
-            margin-top: 20px; padding: 15px; border-radius: 15px;
-            background: rgba(255,255,255,0.05); min-height: 70px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; font-weight: bold; color: #fff; border: 1px dashed #333;
-        }
-
-        .footer { margin-top: 20px; font-size: 22px; font-weight: bold; color: #d4af37; }
-    </style>
-</head>
-<body>
-    <div class="overlay"></div>
-    <div class="card">
-        <div class="logo"></div>
-        <h2>Grageas de Sabores</h2>
-        
-        <select id="miLista" onchange="ver()">
-            <option value="">-- Selecciona una --</option>
-            <option>Aceitunas 🫒</option>
-            <option>Ajo crudo 🧄</option>
-            <option>Alga marina 🪸</option>
-            <option>Aliento de dragón 🐉🌬️</option>
-            <option>Vómito 🤮</option>
-            <option>Moco 🦠</option>
-            <option>Sangre de unicornio 🦄</option>
-            <option>Chocolate 🍫</option>
-            <option>Cera de oído 👂</option>
-            <option>Whisky 🥃</option>
-            </select>
-
-        <div class="resultado" id="caja">¿Qué sabor eliges?</div>
-        
-        <div class="footer">Hogwarts Orión</div>
-    </div>
-
-    <script>
-        function ver() {
-            const s = document.getElementById('miLista').value;
-            const c = document.getElementById('caja');
-            c.innerText = s ? "Has elegido: " + s : "¿Qué sabor eliges?";
-        }
-    </script>
-</body>
-</html>
+            background-color: #000; box-shadow: 0 0
