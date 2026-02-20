@@ -3,41 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grageas Orion</title>
+    <title>Grageas Orion - Juego</title>
     <style>
         body, html { 
             margin: 0; padding: 0; height: 100vh; width: 100vw;
             display: flex; align-items: center; justify-content: center;
-            background-color: #000;
-            background-image: url('https://i.ibb.co/bMh1c0Tx/1771555355884.png');
-            background-size: cover; background-position: center;
-            font-family: 'Georgia', serif; overflow: hidden;
+            background: #000 url('https://i.ibb.co/bMh1c0Tx/1771555355884.png') no-repeat center;
+            background-size: cover; font-family: 'Georgia', serif; overflow: hidden;
         }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 1; }
         .card {
-            position: relative; z-index: 10;
-            background: #0a0a0a; border: 2px solid #d4af37; border-radius: 40px;
-            padding: 30px; width: 85%; max-width: 380px; text-align: center;
+            position: relative; z-index: 10; background: #0a0a0a; border: 2px solid #d4af37; 
+            border-radius: 40px; padding: 25px; width: 85%; max-width: 380px; text-align: center;
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
         }
         .logo {
-            width: 110px; height: 110px; margin: 0 auto 20px;
-            border-radius: 50%; border: 3px solid #d4af37;
-            background: #000 url('https://i.ibb.co/DDq32t55/1771555069500.png') no-repeat center;
-            background-size: 80%;
+            width: 100px; height: 100px; margin: 0 auto 15px; border-radius: 50%; border: 2px solid #d4af37;
+            background: #000 url('https://i.ibb.co/DDq32t55/1771555069500.png') no-repeat center; background-size: 80%;
         }
-        h2 { color: #d4af37; font-size: 18px; text-transform: uppercase; margin-bottom: 20px; }
+        h2 { color: #d4af37; font-size: 18px; text-transform: uppercase; margin-bottom: 15px; }
         select {
             width: 100%; padding: 12px; background: #111; border: 1px solid #d4af37;
-            border-radius: 15px; color: #fff; font-size: 16px; outline: none;
+            border-radius: 15px; color: #fff; font-size: 15px; outline: none; margin-bottom: 15px;
         }
-        .res {
-            margin-top: 20px; padding: 15px; border-radius: 15px;
-            background: rgba(255,255,255,0.05); min-height: 70px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; font-weight: bold; color: #fff; border: 1px dashed #333;
+        button {
+            background: linear-gradient(45deg, #d4af37, #f9e29c); border: none; padding: 12px 20px;
+            border-radius: 20px; color: #000; font-weight: bold; cursor: pointer; font-size: 16px;
+            transition: 0.3s; width: 100%; display: none; margin-bottom: 15px;
         }
-        .footer { margin-top: 20px; font-size: 24px; font-weight: bold; color: #d4af37; }
+        button:hover { transform: scale(1.05); box-shadow: 0 0 15px #d4af37; }
+        .res-box {
+            padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.05);
+            min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 1px dashed #444;
+        }
+        #sabor-txt { font-size: 14px; color: #aaa; margin-bottom: 5px; }
+        #premio-txt { font-size: 20px; font-weight: bold; color: #fff; text-shadow: 0 0 10px #d4af37; text-align: center; }
+        .footer { margin-top: 15px; font-size: 22px; font-weight: bold; color: #d4af37; }
     </style>
 </head>
 <body>
@@ -45,8 +47,9 @@
     <div class="card">
         <div class="logo"></div>
         <h2>Grageas de Sabores</h2>
-        <select id="sel" onchange="ver()">
-            <option value="">-- Selecciona --</option>
+        
+        <select id="sel" onchange="prepararGragea()">
+            <option value="">-- Elige un sabor --</option>
             <option>1. Aceitunas 🫒</option><option>2. Ajo crudo 🧄</option><option>3. Alga marina 🪸</option><option>4. Aliento de dragón 🐉🌬️</option>
             <option>5. Aliento de ogro 🧌</option><option>6. Algodón de azúcar 🍭</option><option>7. Arándanos 🫐</option><option>8. Baba de caracol 🐌</option>
             <option>9. Bellini 🥂</option><option>10. Beso no correspondido 💋💔</option><option>11. Biberón 🍼</option><option>12. Blody Mary 🫗🩸</option>
@@ -79,14 +82,21 @@
             <option>117. Trigo seco 🌾</option><option>118. Tronco podrido 🪵</option><option>119. Tocino 🥓</option><option>120. Vino 🍷</option>
             <option>121. Vómito 🤮</option><option>122. Waffles 🧇</option><option>123. Whisky 🥃</option>
         </select>
-        <div class="res" id="r">¿Cuál te tocó?</div>
+
+        <button id="btn-abrir" onclick="abrirGragea()">¡Abrir Gragea! ✨</button>
+
+        <div class="res-box">
+            <div id="sabor-txt"></div>
+            <div id="premio-txt">Elige un sabor para empezar...</div>
+        </div>
+
         <div class="footer">Hogwarts Orión</div>
     </div>
+
     <script>
-        function ver() {
-            var s = document.getElementById('sel').value;
-            document.getElementById('r').innerText = s ? s : "¿Cuál te tocó?";
-        }
-    </script>
-</body>
-</html>
+        const premios = [
+            "Saeta de fuego 🔥🧹", "Nimbus 2000 🪽🧹", "Anillo de Morfín Gaunt 💍", "Varita de saúco 🪄💀",
+            "El desiluminador 💡", "Pergamino mágico 📜", "El traslador 🔮", "Carta vociferadora 💌",
+            "Giratiempo ⏱", "Félix felicis 🍀🧪", "Pluma de Hermione 🪶", "Amortentia 💘🧪",
+            "Pastillas vomitivas 💊", "Ranita Amarilla 💛🍫", "Ranita verde 💚🍫", "Ranita roja ❤🍫",
+            "Ranita negra 🖤🍫", "Ranita rosa
