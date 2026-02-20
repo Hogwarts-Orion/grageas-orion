@@ -3,100 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grageas Orion - Juego</title>
+    <title>Grageas Orion - Sistema de Apertura</title>
     <style>
         body, html { 
-            margin: 0; padding: 0; height: 100vh; width: 100vw;
-            display: flex; align-items: center; justify-content: center;
-            background: #000 url('https://i.ibb.co/bMh1c0Tx/1771555355884.png') no-repeat center;
-            background-size: cover; font-family: 'Georgia', serif; overflow: hidden;
+            margin: 0; padding: 0; min-height: 100vh; width: 100vw;
+            background: #0d1117 url('https://i.ibb.co/bMh1c0Tx/1771555355884.png') no-repeat center fixed;
+            background-size: cover; font-family: 'Georgia', serif; color: #fff;
+            display: flex; flex-direction: column; align-items: center; padding-top: 20px;
         }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 1; }
-        .card {
-            position: relative; z-index: 10; background: #0a0a0a; border: 2px solid #d4af37; 
-            border-radius: 40px; padding: 25px; width: 85%; max-width: 380px; text-align: center;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: -1; }
+        
+        h1 { color: #f9e29c; font-size: 22px; text-align: center; margin-bottom: 20px; text-shadow: 0 0 10px rgba(249,226,156,0.5); }
+        
+        .main-selector {
+            width: 90%; max-width: 600px; background: #161b22; border: 1px solid #30363d;
+            padding: 10px; border-radius: 8px; margin-bottom: 20px;
         }
-        .logo {
-            width: 100px; height: 100px; margin: 0 auto 15px; border-radius: 50%; border: 2px solid #d4af37;
-            background: #000 url('https://i.ibb.co/DDq32t55/1771555069500.png') no-repeat center; background-size: 80%;
-        }
-        h2 { color: #d4af37; font-size: 18px; text-transform: uppercase; margin-bottom: 15px; }
+        
         select {
-            width: 100%; padding: 12px; background: #111; border: 1px solid #d4af37;
-            border-radius: 15px; color: #fff; font-size: 15px; outline: none; margin-bottom: 15px;
+            width: 100%; background: transparent; border: none; color: #f9e29c; 
+            font-size: 16px; outline: none; cursor: pointer;
         }
-        button {
-            background: linear-gradient(45deg, #d4af37, #f9e29c); border: none; padding: 12px 20px;
-            border-radius: 20px; color: #000; font-weight: bold; cursor: pointer; font-size: 16px;
-            transition: 0.3s; width: 100%; display: none; margin-bottom: 15px;
+
+        .gragea-container {
+            width: 90%; max-width: 450px; background: rgba(10, 10, 10, 0.9);
+            border: 2px solid #d4af37; border-radius: 15px; padding: 20px;
+            margin-bottom: 20px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
         }
-        button:hover { transform: scale(1.05); box-shadow: 0 0 15px #d4af37; }
-        .res-box {
-            padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.05);
-            min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border: 1px dashed #444;
+
+        .gragea-title { color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 18px; }
+
+        .sabor-sel {
+            width: 100%; padding: 8px; background: #000; border: 1px solid #d4af37;
+            border-radius: 10px; color: #fff; margin-bottom: 10px; font-size: 14px;
         }
-        #sabor-txt { font-size: 14px; color: #aaa; margin-bottom: 5px; }
-        #premio-txt { font-size: 20px; font-weight: bold; color: #fff; text-shadow: 0 0 10px #d4af37; text-align: center; }
-        .footer { margin-top: 15px; font-size: 22px; font-weight: bold; color: #d4af37; }
+
+        .btn-abrir {
+            background: #f9e29c; color: #000; border: none; padding: 12px 30px;
+            border-radius: 8px; font-weight: bold; font-size: 18px; cursor: pointer;
+            margin: 20px 0; transition: 0.3s;
+        }
+        .btn-abrir:hover { background: #d4af37; transform: scale(1.05); }
+
+        .resultados {
+            width: 90%; max-width: 450px; background: rgba(255,255,255,0.05);
+            border-radius: 15px; padding: 15px; border: 1px dashed #d4af37;
+            display: none; margin-bottom: 40px;
+        }
+        .item-ganado { padding: 10px; border-bottom: 1px solid #333; font-size: 16px; }
+        .item-ganado:last-child { border-bottom: none; }
+        .footer { color: #d4af37; font-size: 24px; font-weight: bold; margin-bottom: 30px; }
     </style>
 </head>
 <body>
     <div class="overlay"></div>
-    <div class="card">
-        <div class="logo"></div>
-        <h2>Grageas de Sabores</h2>
-        
-        <select id="sel" onchange="prepararGragea()">
-            <option value="">-- Elige un sabor --</option>
-            <option>1. Aceitunas 🫒</option><option>2. Ajo crudo 🧄</option><option>3. Alga marina 🪸</option><option>4. Aliento de dragón 🐉🌬️</option>
-            <option>5. Aliento de ogro 🧌</option><option>6. Algodón de azúcar 🍭</option><option>7. Arándanos 🫐</option><option>8. Baba de caracol 🐌</option>
-            <option>9. Bellini 🥂</option><option>10. Beso no correspondido 💋💔</option><option>11. Biberón 🍼</option><option>12. Blody Mary 🫗🩸</option>
-            <option>13. Brillo labial 💋💄</option><option>14. Burrito 🌯</option><option>15. Cacahuate 🥜</option><option>16. Caña de azúcar 🎋</option>
-            <option>17. Canela en polvo 🍂</option><option>18. Cáscara de plátano 🍌</option><option>19. Café frío ☕</option><option>20. Café quemado ☕🔥</option>
-            <option>21. Caldo de murciélago 🦇🍲</option><option>22. Cebolla caramelizada 🧅</option><option>23. Cereza 🍒</option><option>24. Cerveza 🍺</option>
-            <option>25. Chicle de menta 🍬</option><option>26. Chisme express 🫦☕️</option><option>27. Chorizo 🥩</option><option>28. Cítricos 🍋</option>
-            <option>29. Coco 🥥</option><option>30. Cóctel 🍸</option><option>31. Coliflor cruda 🥦</option><option>32. Cera de oído 👂</option>
-            <option>33. Champaña 🥂</option><option>34. Chocolate 🍫</option><option>35. Cupcake 🧁</option><option>36. Donas 🍩</option>
-            <option>37. Drama queen 👑💅🏼</option><option>38. Dulce de leche 🥮</option><option>39. Dumpling 🥟</option><option>40. Durazno 🍑</option>
-            <option>41. Ensalada 🥗</option><option>42. Esencia de mandrágora 🌱</option><option>43. Espinaca cocida 🍲</option><option>44. Espuma de mar 🌊</option>
-            <option>45. Estiércol de dragón 🐉💩</option><option>46. Ex 👅</option><option>47. Exponme 👀🔮</option><option>48. Flor de cactus 🌵</option>
-            <option>49. Frutilla 🍓</option><option>50. Galleta de avena 🍪</option><option>51. Gelatina de sapo 🐸</option><option>52. Guisado 🍛</option>
-            <option>53. Guisantes triturados 🫛</option><option>54. Helado de calabaza 🎃</option><option>55. Helado de vainilla 🍨</option><option>56. Hielo 🧊</option>
-            <option>57. Hojas secas 🍁</option><option>58. Hueso dragón tostado 🦴</option><option>59. Huevo frito 🍳</option><option>60. Huevo podrido 🥚</option>
-            <option>61. Jarabe de arce 🍯</option><option>62. Jugo de pepino 🥒</option><option>63. Kiwi 🥝</option><option>64. Leche 🐮</option>
-            <option>65. Leche caducada 🥛</option><option>66. Leche podrida 🧋</option><option>67. Lo juro ✋🏻</option><option>68. Manteca de maní 🥜</option>
-            <option>69. Manteca rancia 🧈</option><option>70. Margarita 🍸</option><option>71. Martini 🍸</option><option>72. Mate 🧉</option>
-            <option>73. Menta 🌿</option><option>74. Mezcla de hongos 🍄</option><option>75. Mermelada de escarabajo 🪲</option><option>76. Moco 🦠</option>
-            <option>77. Naruto 🍥</option><option>78. Negroni 🥃</option><option>79. Onigiri 🍙</option><option>80. Ostras vivas 🦪</option>
-            <option>81. Pan con hongos 🫓</option><option>82. Papas fritas 🍟</option><option>83. Pasta de dientes 🪥</option><option>84. Pasta pegajosa 🍝</option>
-            <option>85. Pastel 🍰</option><option>86. Pepino 🥒</option><option>87. Picante 🌶️</option><option>88. Pie de manzana 🥧</option>
-            <option>89. Pimiento asado 🫑</option><option>90. Piña colada 🍹</option><option>91. Pizza 🍕</option><option>92. Pollo asado 🍗</option>
-            <option>93. Polvos mágicos ✨</option><option>94. Pudín 🍮</option><option>95. Queso mohoso 🧀</option><option>96. Redflag 🚩</option>
-            <option>97. Raíz de mandrágora 🌱</option><option>98. Ron añejo 🍾</option><option>99. Sal marina 🧂</option><option>100. Sandía 🍉</option>
-            <option>101. Sangre 🩸</option><option>102. Sangre de unicornio 🦄</option><option>103. Sangre de unicornio oxidada 🦄</option><option>104. Sardinas enlatadas 🐟</option>
-            <option>105. Sexo en la playa 🥃🏖️</option><option>106. Soju 🍶</option><option>107. Sopa de pescado 🍵</option><option>108. Sopa de pescado en mal estado 🍵</option>
-            <option>109. Spaguetti 🍝</option><option>110. Sudor 💦</option><option>111. Sudor de troll 🧟‍♂️💦</option><option>112. Sushi 🍣</option>
-            <option>113. Tacos 🌮</option><option>114. Tamal 🫔</option><option>115. Te negro 🫖🖤</option><option>116. Tinta de pulpo 🐙</option>
-            <option>117. Trigo seco 🌾</option><option>118. Tronco podrido 🪵</option><option>119. Tocino 🥓</option><option>120. Vino 🍷</option>
-            <option>121. Vómito 🤮</option><option>122. Waffles 🧇</option><option>123. Whisky 🥃</option>
+    <h1>¿Cuántas grageas quieres abrir?</h1>
+    
+    <div class="main-selector">
+        <select id="cantidad" onchange="generarGrageas()">
+            <option value="0">Selecciona cantidad...</option>
+            <option value="1">1 gragea</option>
+            <option value="2">2 grageas</option>
+            <option value="3">3 grageas</option>
         </select>
-
-        <button id="btn-abrir" onclick="abrirGragea()">¡Abrir Gragea! ✨</button>
-
-        <div class="res-box">
-            <div id="sabor-txt"></div>
-            <div id="premio-txt">Elige un sabor para empezar...</div>
-        </div>
-
-        <div class="footer">Hogwarts Orión</div>
     </div>
 
+    <div id="contenedor-dinamico"></div>
+
+    <button id="btn-final" class="btn-abrir" style="display:none;" onclick="revelarPremios()">Abrir Grageas</button>
+
+    <div id="res-final" class="resultados"></div>
+
+    <div class="footer">Hogwarts Orión</div>
+
     <script>
-        const premios = [
-            "Saeta de fuego 🔥🧹", "Nimbus 2000 🪽🧹", "Anillo de Morfín Gaunt 💍", "Varita de saúco 🪄💀",
-            "El desiluminador 💡", "Pergamino mágico 📜", "El traslador 🔮", "Carta vociferadora 💌",
-            "Giratiempo ⏱", "Félix felicis 🍀🧪", "Pluma de Hermione 🪶", "Amortentia 💘🧪",
-            "Pastillas vomitivas 💊", "Ranita Amarilla 💛🍫", "Ranita verde 💚🍫", "Ranita roja ❤🍫",
-            "Ranita negra 🖤🍫", "Ranita rosa
+        const sabores = [
+            "1. Aceitunas 🫒", "2. Ajo crudo 🧄", "3. Alga marina 🪸", "4. Aliento de dragón 🐉🌬️",
+            "5. Aliento de ogro 🧌", "6. Algodón de azúcar 🍭", "7. Arándanos 🫐", "8. Baba de caracol 🐌",
+            "9. Bellini 🥂", "10. Beso no correspondido 💋💔", "11. Biberón 🍼", "12. Blody Mary 🫗🩸",
+            "13. Brillo labial 💋💄", "14. Burrito 🌯", "15. Cacahuate 🥜", "16. Caña de azúcar 🎋",
+            "17. Canela en polvo 🍂", "18. Cáscara de plátano 🍌", "19. Café frío ☕", "20. Café quemado ☕🔥",
+            "21. Caldo de murciélago 🦇🍲", "22. Cebolla caramelizada 🧅", "23. Cereza 🍒", "24. Cerveza 🍺",
+            "25. Chicle de menta 🍬", "26. Chisme express 🫦☕️", "27. Chorizo 🥩", "28. Cítricos 🍋",
+            "29. Coco 🥥", "30. Cóctel 🍸", "31. Coliflor cruda 🥦", "32. Cera de oído 👂",
+            "33. Champa
