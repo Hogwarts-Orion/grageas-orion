@@ -25,4 +25,77 @@
             border-radius: 50%; border: 3px solid #d4af37;
             background-image: url('https://i.ibb.co/DDq32t55/1771555069500.png');
             background-size: 80%; background-repeat: no-repeat; background-position: center;
-            background-color:
+            background-color: #000; box-shadow: 0 0 15px #d4af37;
+        }
+        h2 { color: #d4af37; font-size: 18px; margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
+        select {
+            width: 100%; padding: 15px; background: #111; border: 1px solid #d4af37;
+            border-radius: 20px; color: #fff; font-size: 16px; outline: none;
+            cursor: pointer; font-family: 'Georgia', serif;
+        }
+        .display-resultado {
+            margin-top: 25px; padding: 20px; border: 1px dashed #333; border-radius: 20px;
+            background: rgba(255,255,255,0.02); min-height: 80px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        #texto-elegido { font-size: 22px; font-weight: bold; color: #fff; text-shadow: 0 0 10px #d4af37; }
+        .footer { margin-top: 25px; font-size: 24px; font-weight: bold; color: #d4af37; text-shadow: 0 0 10px #d4af37; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="card">
+        <div class="logo-circle"></div>
+        <h2>Grageas de Sabores</h2>
+        
+        <select id="selector" onchange="actualizar()">
+            <option value="">-- Elige una gragea --</option>
+            <option>1. Aceitunas 🫒</option><option>2. Ajo crudo 🧄</option><option>3. Alga marina 🪸</option><option>4. Aliento de dragón 🐉🌬️</option>
+            <option>5. Aliento de ogro 🧌</option><option>6. Algodón de azúcar 🍭</option><option>7. Arándanos 🫐</option><option>8. Baba de caracol 🐌</option>
+            <option>9. Bellini 🥂</option><option>10. Beso no correspondido 💋💔</option><option>11. Biberón 🍼</option><option>12. Blody Mary 🫗🩸</option>
+            <option>13. Brillo labial 💋💄</option><option>14. Burrito 🌯</option><option>15. Cacahuate 🥜</option><option>16. Caña de azúcar 🎋</option>
+            <option>17. Canela en polvo 🍂</option><option>18. Cáscara de plátano 🍌</option><option>19. Café frío ☕</option><option>20. Café quemado ☕🔥</option>
+            <option>21. Caldo de murciélago 🦇🍲</option><option>22. Cebolla caramelizada 🧅</option><option>23. Cereza 🍒</option><option>24. Cerveza 🍺</option>
+            <option>25. Chicle de menta 🍬</option><option>26. Chisme express 🫦☕️</option><option>27. Chorizo 🥩</option><option>28. Cítricos 🍋</option>
+            <option>29. Coco 🥥</option><option>30. Cóctel 🍸</option><option>31. Coliflor cruda 🥦</option><option>32. Cera de oído 👂</option>
+            <option>33. Champaña 🥂</option><option>34. Chocolate 🍫</option><option>35. Cupcake 🧁</option><option>36. Donas 🍩</option>
+            <option>37. Drama queen 👑💅🏼</option><option>38. Dulce de leche 🥮</option><option>39. Dumpling 🥟</option><option>40. Durazno 🍑</option>
+            <option>41. Ensalada 🥗</option><option>42. Esencia de mandrágora 🌱</option><option>43. Espinaca cocida 🍲</option><option>44. Espuma de mar 🌊</option>
+            <option>45. Estiércol de dragón 🐉💩</option><option>46. Ex 👅</option><option>47. Exponme 👀🔮</option><option>48. Flor de cactus 🌵</option>
+            <option>49. Frutilla  strawberry 🍓</option><option>50. Galleta de avena 🍪</option><option>51. Gelatina de sapo 🐸</option><option>52. Guisado 🍛</option>
+            <option>53. Guisantes triturados 🫛</option><option>54. Helado de calabaza 🎃</option><option>55. Helado de vainilla 🍨</option><option>56. Hielo 🧊</option>
+            <option>57. Hojas secas 🍁</option><option>58. Hueso dragón tostado 🦴</option><option>59. Huevo frito 🍳</option><option>60. Huevo podrido 🥚</option>
+            <option>61. Jarabe de arce 🍯</option><option>62. Jugo de pepino 🥒</option><option>63. Kiwi 🥝</option><option>64. Leche 🐮</option>
+            <option>65. Leche caducada 🥛</option><option>66. Leche podrida 🧋</option><option>67. Lo juro ✋🏻</option><option>68. Manteca de maní 🥜</option>
+            <option>69. Manteca rancia 🧈</option><option>70. Margarita 🍸</option><option>71. Martini 🍸</option><option>72. Mate 🧉</option>
+            <option>73. Menta 🌿</option><option>74. Mezcla de hongos 🍄</option><option>75. Mermelada de escarabajo 🪲</option><option>76. Moco 🦠</option>
+            <option>77. Naruto 🍥</option><option>78. Negroni 🥃</option><option>79. Onigiri 🍙</option><option>80. Ostras vivas 🦪</option>
+            <option>81. Pan con hongos 🫓</option><option>82. Papas fritas 🍟</option><option>83. Pasta de dientes 🪥</option><option>84. Pasta pegajosa 🍝</option>
+            <option>85. Pastel 🍰</option><option>86. Pepino 🥒</option><option>87. Picante 🌶️</option><option>88. Pie de manzana 🥧</option>
+            <option>89. Pimiento asado 🫑</option><option>90. Piña colada 🍹</option><option>91. Pizza 🍕</option><option>92. Pollo asado 🍗</option>
+            <option>93. Polvos mágicos ✨</option><option>94. Pudín 🍮</option><option>95. Queso mohoso 🧀</option><option>96. Redflag 🚩</option>
+            <option>97. Raíz de mandrágora 🌱</option><option>98. Ron añejo 🍾</option><option>99. Sal marina 🧂</option><option>100. Sandía 🍉</option>
+            <option>101. Sangre 🩸</option><option>102. Sangre de unicornio 🦄</option><option>103. Sangre de unicornio oxidada 🦄</option><option>104. Sardinas enlatadas 🐟</option>
+            <option>105. Sexo en la playa 🥃🏖️</option><option>106. Soju 🍶</option><option>107. Sopa de pescado 🍵</option><option>108. Sopa de pescado en mal estado 🍵</option>
+            <option>109. Spaguetti 🍝</option><option>110. Sudor 💦</option><option>111. Sudor de troll 🧟‍♂️💦</option><option>112. Sushi 🍣</option>
+            <option>113. Tacos 🌮</option><option>114. Tamal 🫔</option><option>115. Te negro 🫖🖤</option><option>116. Tinta de pulpo 🐙</option>
+            <option>117. Trigo seco 🌾</option><option>118. Tronco podrido 🪵</option><option>119. Tocino 🥓</option><option>120. Vino 🍷</option>
+            <option>121. Vómito 🤮</option><option>122. Waffles 🧇</option><option>123. Whisky 🥃</option><option>124. Se acabó el festín 🪄</option>
+        </select>
+
+        <div class="display-resultado">
+            <div id="texto-elegido">¿Qué número te tocó?</div>
+        </div>
+
+        <div class="footer">Hogwarts Orión</div>
+    </div>
+
+    <script>
+        function actualizar() {
+            const s = document.getElementById('selector').value;
+            const t = document.getElementById('texto-elegido');
+            t.innerText = s ? s : "¿Qué número te tocó?";
+        }
+    </script>
+</body>
+</html>
