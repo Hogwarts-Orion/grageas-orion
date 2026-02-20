@@ -10,16 +10,31 @@
             display: flex; flex-direction: column; align-items: center; padding: 20px;
         }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: -1; }
-        .main-sel-box { width: 95%; max-width: 800px; background: #161b22; border: 1px solid #d4af37; border-radius: 4px; padding: 10px; margin-bottom: 25px; }
+        
+        .main-sel-box { width: 95%; max-width: 800px; background: #161b22; border: 1px solid #d4af37; border-radius: 4px; padding: 15px; margin-bottom: 25px; }
+        
+        input#nombre-mago {
+            width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; 
+            border: 1px solid #d4af37; background: #000; color: #f9e29c; font-size: 16px; box-sizing: border-box;
+        }
+
         #cantidad { width: 100%; background: transparent; border: none; color: #f9e29c; font-size: 18px; outline: none; cursor: pointer; }
+        
         .gragea-card { width: 90%; max-width: 450px; background: rgba(10, 10, 10, 0.95); border: 2px solid #d4af37; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
         .sabor-sel { width: 100%; padding: 10px; background: #000; border: 1px solid #444; border-radius: 6px; color: #fff; margin-bottom: 10px; }
-        .btn-abrir { background: #f9e29c; color: #000; border: none; padding: 18px 60px; border-radius: 10px; font-weight: bold; font-size: 20px; cursor: pointer; display: none; margin-bottom: 30px; }
         
-        /* Historial de Grageas */
+        .btn-abrir { background: #f9e29c; color: #000; border: none; padding: 18px 60px; border-radius: 10px; font-weight: bold; font-size: 20px; cursor: pointer; display: none; margin-bottom: 30px; transition: 0.3s; }
+        .btn-abrir:hover { background: #fff; transform: scale(1.05); }
+
         .historial-box { width: 95%; max-width: 600px; background: rgba(0,0,0,0.9); border: 2px solid #d4af37; border-radius: 12px; padding: 20px; }
-        .historial-entrada { background: rgba(255,255,255,0.05); border-left: 4px solid #d4af37; padding: 15px; margin-bottom: 15px; border-radius: 8px; animation: slideIn 0.5s ease; }
+        .historial-entrada { position: relative; background: rgba(255,255,255,0.05); border-left: 4px solid #d4af37; padding: 15px; margin-bottom: 15px; border-radius: 8px; animation: slideIn 0.5s ease; }
         .premio-log { color: #f9e29c; font-weight: bold; }
+        
+        .btn-copiar {
+            position: absolute; top: 10px; right: 10px; background: #d4af37; color: #000;
+            border: none; padding: 5px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold;
+        }
+
         @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .footer { color: #d4af37; font-size: 26px; font-weight: bold; margin: 40px 0; }
     </style>
@@ -29,6 +44,7 @@
     <h1 style="color:#f9e29c">Hogwarts Orión - Apertura de Grageas</h1>
     
     <div class="main-sel-box">
+        <input type="text" id="nombre-mago" placeholder="Escribe tu nombre de mago/bruja...">
         <select id="cantidad" onchange="generarCajas()">
             <option value="0">¿Cuántas grageas quieres abrir? --</option>
             <option value="1">1 gragea</option>
@@ -40,15 +56,14 @@
     <div id="contenedor-grageas"></div>
     <button id="btn-magico" class="btn-abrir" onclick="abrirGrageas()">Abrir Grageas ✨</button>
 
-    <div class="historial-box">
+    <div id="historial-seccion" class="historial-box">
         <h2 style="color:#f9e29c; text-align:center; margin-top:0;">📜 Historial de Aperturas</h2>
-        <div id="log-content">Cargando historial mágico</div>
+        <div id="log-content">Cargando historial mágico...</div>
     </div>
 
     <div class="footer">Hogwarts Orión</div>
 
     <script>
-        // CONFIGURACIÓN: Pega aquí la URL de tu Firebase Realtime Database
         const DB_URL = "https://hogwarts-orion-default-rtdb.firebaseio.com/historial.json";
 
         const SABORES = ["1. Aceitunas 🫒", "2. Ajo crudo 🧄", "3. Alga marina 🪸", "4. Aliento de dragón 🐉🌬️", "5. Aliento de ogro 🧌", "6. Algodón de azúcar 🍭", "7. Arándanos 🫐", "8. Baba de caracol 🐌", "9. Bellini 🥂", "10. Beso no correspondido 💋💔", "11. Biberón 🍼", "12. Blody Mary 🫗🩸", "13. Brillo labial 💋💄", "14. Burrito 🌯", "15. Cacahuate 🥜", "16. Caña de azúcar 🎋", "17. Canela en polvo 🍂", "18. Cáscara de plátano 🍌", "19. Café frío ☕", "20. Café quemado ☕🔥", "21. Caldo de murciélago 🦇🍲", "22. Cebolla caramelizada 🧅", "23. Cereza 🍒", "24. Cerveza 🍺", "25. Chicle de menta 🍬", "26. Chisme express 🫦☕️", "27. Chorizo 🥩", "28. Cítricos 🍋", "29. Coco 🥥", "30. Cóctel 🍸", "31. Coliflor cruda 🥦", "32. Cera de oído 👂", "33. Champaña 🥂", "34. Chocolate 🍫", "35. Cupcake 🧁", "36. Donas 🍩", "37. Drama queen 👑💅🏼", "38. Dulce de leche 🥮", "39. Dumpling 🥟", "40. Durazno 🍑", "41. Ensalada 🥗", "42. Esencia de mandrágora 🌱", "43. Espinaca cocida 🍲", "44. Espuma de mar 🌊", "45. Estiércol de dragón 🐉💩", "46. Ex 👅", "47. Exponme 👀🔮", "48. Flor de cactus 🌵", "49. Frutilla 🍓", "50. Galleta de avena 🍪", "51. Gelatina de sapo 🐸", "52. Guisado 🍛", "53. Guisantes triturados 🫛", "54. Helado de calabaza 🎃", "55. Helado de vainilla 🍨", "56. Hielo 🧊", "57. Hojas secas 🍁", "58. Hueso dragón tostado 🦴", "59. Huevo frito 🍳", "60. Huevo podrido 🥚", "61. Jarabe de arce 🍯", "62. Jugo de pepino 🥒", "63. Kiwi 🥝", "64. Leche 🐮", "65. Leche caducada 🥛", "66. Leche podrida 🧋", "67. Lo juro ✋🏻", "68. Manteca de maní 🥜", "69. Manteca rancia 🧈", "70. Margarita 🍸", "71. Martini 🍸", "72. Mate 🧉", "73. Menta 🌿", "74. Mezcla de hongos 🍄", "75. Mermelada de escarabajo 🪲", "76. Moco 🦠", "77. Naruto 🍥", "78. Negroni 🥃", "79. Onigiri 🍙", "80. Ostras vivas 🦪", "81. Pan con hongos 🫓", "82. Papas fritas 🍟", "83. Pasta de dientes 🪥", "84. Pasta pegajosa 🍝", "85. Pastel 🍰", "86. Pepino 🥒", "87. Picante 🌶️", "88. Pie de manzana 🥧", "89. Pimiento asado 🫑", "90. Piña colada 🍹", "91. Pizza 🍕", "92. Pollo asado 🍗", "93. Polvos mágicos ✨", "94. Pudín 🍮", "95. Queso mohoso 🧀", "96. Redflag 🚩", "97. Raíz de mandrágora 🌱", "98. Ron añejo 🍾", "99. Sal marina 🧂", "100. Sandía 🍉", "101. Sangre 🩸", "102. Sangre de unicornio 🦄", "103. Sangre de unicornio oxidada 🦄", "104. Sardinas enlatadas 🐟", "105. Sexo en la playa 🥃🏖️", "106. Soju 🍶", "107. Sopa de pescado 🍵", "108. Sopa de pescado en mal estado 🍵", "109. Spaguetti 🍝", "110. Sudor 💦", "111. Sudor de troll 🧟‍♂️💦", "112. Sushi 🍣", "113. Tacos 🌮", "114. Tamal 🫔", "115. Te negro 🫖🖤", "116. Tinta de pulpo 🐙", "117. Trigo seco 🌾", "118. Tronco podrido 🪵", "119. Tocino 🥓", "120. Vino 🍷", "121. Vómito 🤮", "122. Waffles 🧇", "123. Whisky 🥃"];
@@ -61,13 +76,12 @@
                 const log = document.getElementById('log-content');
                 if(!data) { log.innerHTML = "No hay registros."; return; }
                 let html = "";
-                const entradas = Object.values(data).reverse(); // Lo más nuevo arriba
+                const entradas = Object.values(data).reverse();
                 entradas.forEach(e => html += e);
                 log.innerHTML = html;
             });
         }
 
-        // Cargar cada 5 segundos para que todos vean lo nuevo
         setInterval(cargarHistorialGlobal, 5000);
         window.onload = cargarHistorialGlobal;
 
@@ -89,18 +103,27 @@
         }
 
         function abrirGrageas() {
+            const nombreMago = document.getElementById('nombre-mago').value || "Mago Anónimo";
             const tiempo = new Date().toLocaleString();
-            let htmlEntrada = `<div class="historial-entrada"><div style="font-size:11px; color:#aaa">${tiempo}</div>`;
+            
+            let textoCopiable = `🧙‍♂️ ${nombreMago} - Apertura de Grageas (${tiempo})\n`;
+            let htmlEntrada = `<div class="historial-entrada">
+                <button class="btn-copiar" onclick="copiarEntrada(this)">Copiar 📋</button>
+                <div style="font-size:11px; color:#aaa">${tiempo}</div>
+                <div style="color:#f9e29c; font-weight:bold; margin-bottom:5px;">🧙‍♂️ ${nombreMago} ha abierto:</div>`;
+
             document.querySelectorAll('.gragea-card').forEach((caja, idx) => {
                 htmlEntrada += `<strong>📍 Gragea ${idx+1}:</strong><br>`;
+                textoCopiable += `📍 Gragea ${idx+1}:\n`;
                 caja.querySelectorAll('select').forEach(sel => {
                     const p = PREMIOS[Math.floor(Math.random() * PREMIOS.length)];
                     htmlEntrada += `&nbsp;&nbsp;• ${sel.value} → <span class="premio-log">${p}</span><br>`;
+                    textoCopiable += `• ${sel.value} → ${p}\n`;
                 });
             });
-            htmlEntrada += `</div>`;
 
-            // ENVIAR A FIREBASE
+            htmlEntrada += `<textarea style="display:none">${textoCopiable}</textarea></div>`;
+
             fetch(DB_URL, {
                 method: 'POST',
                 body: JSON.stringify(htmlEntrada)
@@ -109,6 +132,15 @@
                 document.getElementById('cantidad').value = 0;
                 document.getElementById('contenedor-grageas').innerHTML = "";
                 document.getElementById('btn-magico').style.display = "none";
+                document.getElementById('historial-seccion').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        function copiarEntrada(boton) {
+            const texto = boton.parentElement.querySelector('textarea').value;
+            navigator.clipboard.writeText(texto).then(() => {
+                boton.innerText = "¡Copiado! ✅";
+                setTimeout(() => boton.innerText = "Copiar 📋", 2000);
             });
         }
     </script>
