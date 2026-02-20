@@ -28,4 +28,92 @@
             border-radius: 50%; border: 3px solid #d4af37;
             background-image: url('https://i.ibb.co/DDq32t55/1771555069500.png');
             background-size: 80%; background-repeat: no-repeat; background-position: center;
-            background-color: #000; box-shadow: 0 0
+            background-color: #000; box-shadow: 0 0 15px #d4af37;
+        }
+
+        h2 { color: #d4af37; font-size: 18px; margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
+
+        select {
+            width: 100%; padding: 15px; background: #111; border: 1px solid #d4af37;
+            border-radius: 20px; color: #fff; font-size: 16px; outline: none;
+            cursor: pointer; font-family: 'Georgia', serif;
+        }
+
+        .display-resultado {
+            margin-top: 25px; padding: 20px; border: 1px dashed #333; border-radius: 20px;
+            background: rgba(255,255,255,0.02); min-height: 80px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        #texto-elegido { font-size: 22px; font-weight: bold; color: #fff; text-shadow: 0 0 10px #d4af37; }
+
+        .footer { margin-top: 25px; font-size: 24px; font-weight: bold; color: #d4af37; text-shadow: 0 0 10px #d4af37; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="card">
+        <div class="logo-circle"></div>
+        <h2>Grageas de Sabores</h2>
+        
+        <select id="selector" onchange="actualizar()">
+            <option value="">-- Selecciona --</option>
+            <option>Aceitunas 🫒</option><option>Ajo crudo 🧄</option><option>Alga marina 🪸</option>
+            <option>Aliento de dragón 🐉🌬️</option><option>Aliento de ogro 🧌</option><option>Algodón de azúcar 🍭</option>
+            <option>Arándanos 🫐</option><option>Baba de caracol 🐌</option><option>Bellini 🥂</option>
+            <option>Beso no correspondido 💋💔</option><option>Biberón 🍼</option><option>Blody Mary 🫗🩸</option>
+            <option>Brillo labial 💋💄</option><option>Burrito 🌯</option><option>Cacahuate 🥜</option>
+            <option>Caña de azúcar 🎋</option><option>Canela en polvo 🍂</option><option>Cáscara de plátano 🍌</option>
+            <option>Café frío ☕</option><option>Café quemado ☕🔥</option><option>Caldo de murciélago 🦇🍲</option>
+            <option>Cebolla caramelizada 🧅</option><option>Cereza 🍒</option><option>Cerveza 🍺</option>
+            <option>Chicle de menta 🍬</option><option>Chisme express 🫦☕️</option><option>Chorizo 🥩</option>
+            <option>Cítricos 🍋</option><option>Coco 🥥</option><option>Cóctel 🍸</option>
+            <option>Coliflor cruda 🥦</option><option>Cera de oído 👂</option><option>Champaña 🥂</option>
+            <option>Chocolate 🍫</option><option>Cupcake 🧁</option><option>Donas 🍩</option>
+            <option>Drama queen 👑💅🏼</option><option>Dulce de leche 🥮</option><option>Dumpling 🥟</option>
+            <option>Durazno 🍑</option><option>Ensalada 🥗</option><option>Esencia de mandrágora 🌱</option>
+            <option>Espinaca cocida 🍲</option><option>Espuma de mar 🌊</option><option>Estiércol de dragón 🐉💩</option>
+            <option>Ex 👅</option><option>Exponme 👀🔮</option><option>Flor de cactus 🌵</option>
+            <option>Frutilla 🍓</option><option>Galleta de avena 🍪</option><option>Gelatina de sapo 🐸</option>
+            <option>Guisado 🍛</option><option>Guisantes triturados 🫛</option><option>Helado de calabaza 🎃</option>
+            <option>Helado de vainilla 🍨</option><option>Hielo 🧊</option><option>Hojas secas 🍁</option>
+            <option>Hueso dragón tostado 🦴</option><option>Huevo frito 🍳</option><option>Huevo podrido 🥚</option>
+            <option>Jarabe de arce 🍯</option><option>Jugo de pepino 🥒</option><option>Kiwi 🥝</option>
+            <option>Leche 🐮</option><option>Leche caducada 🥛</option><option>Leche podrida 🧋</option>
+            <option>Lo juro ✋🏻</option><option>Manteca de maní 🥜</option><option>Manteca rancia 🧈</option>
+            <option>Margarita 🍸</option><option>Martini 🍸</option><option>Mate 🧉</option>
+            <option>Menta 🌿</option><option>Mezcla de hongos 🍄</option><option>Mermelada de escarabajo 🪲</option>
+            <option>Moco 🦠</option><option>Naruto 🍥</option><option>Negroni 🥃</option>
+            <option>Onigiri 🍙</option><option>Ostras vivas 🦪</option><option>Pan con hongos 🫓</option>
+            <option>Papas fritas 🍟</option><option>Pasta de dientes 🪥</option><option>Pasta pegajosa 🍝</option>
+            <option>Pastel 🍰</option><option>Pepino 🥒</option><option>Picante 🌶️</option>
+            <option>Pie de manzana 🥧</option><option>Pimiento asado 🫑</option><option>Piña colada 🍹</option>
+            <option>Pizza 🍕</option><option>Pollo asado 🍗</option><option>Polvos mágicos ✨</option>
+            <option>Pudín 🍮</option><option>Queso mohoso 🧀</option><option>Redflag 🚩</option>
+            <option>Raíz de mandrágora 🌱</option><option>Ron añejo 🍾</option><option>Sal marina 🧂</option>
+            <option>Sandía 🍉</option><option>Sangre 🩸</option><option>Sangre de unicornio 🦄</option>
+            <option>Sangre de unicornio oxidada 🦄</option><option>Sardinas enlatadas 🐟</option><option>Sexo en la playa 🥃🏖️</option>
+            <option>Soju 🍶</option><option>Sopa de pescado 🍵</option><option>Sopa de pescado en mal estado 🍵</option><option>Spaguetti 🍝</option>
+            <option>Sudor 💦</option><option>Sudor de troll 🧟‍♂️💦</option><option>Sushi 🍣</option>
+            <option>Tacos 🌮</option><option>Tamal 🫔</option><option>Te negro 🫖🖤</option>
+            <option>Tinta de pulpo 🐙</option><option>Trigo seco 🌾</option><option>Tronco podrido 🪵</option>
+            <option>Tocino 🥓</option><option>Vino 🍷</option><option>Vómito 🤮</option>
+            <option>Waffles 🧇</option><option>Whisky 🥃</option>
+        </select>
+
+        <div class="display-resultado">
+            <div id="texto-elegido">Elegí un sabor...</div>
+        </div>
+
+        <div class="footer">Hogwarts Orión</div>
+    </div>
+
+    <script>
+        function actualizar() {
+            const s = document.getElementById('selector').value;
+            const t = document.getElementById('texto-elegido');
+            t.innerText = s ? s : "Elegí un sabor...";
+        }
+    </script>
+</body>
+</html>
